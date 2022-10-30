@@ -95,18 +95,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
     borderWidth: 2,
     borderColor: 'white',
     padding: 12,
+    fontFamily: 'open-sans-bold',
   },
   instructionTitle: {
     fontSize: 24,
     color: Color.yellow500,
     alignSelf: 'center',
     marginBottom: 6,
+    fontFamily: 'open-sans-bold',
   },
   gameButtonContainer: {
     flexDirection: 'row',

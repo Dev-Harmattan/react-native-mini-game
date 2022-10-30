@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   textInstruction: {
     color: Color.yellow500,
     fontSize: 32,
+    fontFamily: 'open-sans',
   },
   shadowProp: {
     shadowColor: 'black',
@@ -111,5 +112,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'white',
     padding: 12,
+    fontFamily: 'open-sans-bold',
   },
 });
