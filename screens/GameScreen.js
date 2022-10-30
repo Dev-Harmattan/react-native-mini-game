@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import { Title } from '../components/ui/Title';
 import { generateRandomBetween } from '../utils/random';
 import { NumberContainer } from '../components/game/NumberContainer';
@@ -72,13 +73,13 @@ export const GameScreen = ({ enteredNumber, onGameOver }) => {
             onPressButton={handleNextGameGuess.bind(this, 'higher')}
             customStyles={styles.gameButton}
           >
-            +
+            <AntDesign name="plus" size={24} color="white" />
           </PrimaryButton>
           <PrimaryButton
             onPressButton={handleNextGameGuess.bind(this, 'lower')}
             customStyles={styles.gameButton}
           >
-            -
+            <AntDesign name="minus" size={24} color="white" />
           </PrimaryButton>
         </View>
       </Card>
