@@ -3,7 +3,7 @@ import { PrimaryButton } from '../components/ui/PrimaryButton';
 import {Title} from '../components/ui/Title';
 import {Color} from '../utils/colors'
 
-export const GameOver = () => {
+export const GameOver = ({rounds, enteredNumber, onStartNewGame}) => {
   return (
     <View style={styles.rootContainer}>
       <Title customStyles={[styles.title]}>Game Over Screen</Title>
@@ -14,10 +14,13 @@ export const GameOver = () => {
         />
       </View>
       <Text style={styles.summaryText}>
-        Your needed <Text style={styles.highlightText}>X</Text> rounds to get
-        the number of <Text style={styles.highlightText}>Y</Text>.
+        Your needed <Text style={styles.highlightText}>{rounds}</Text> rounds to
+        get the number of{' '}
+        <Text style={styles.highlightText}>{enteredNumber}</Text>.
       </Text>
-      <PrimaryButton>Start new Game</PrimaryButton>
+      <PrimaryButton onPressButton={onStartNewGame}>
+        Start new Game
+      </PrimaryButton>
     </View>
   );
 }

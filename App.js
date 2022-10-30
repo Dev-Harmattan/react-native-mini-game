@@ -9,13 +9,18 @@ import { Color } from './utils/colors';
 import { GameOver } from './screens/GameOverScreen';
 
 export default function App() {
-  const [pickedNumber, setPickedNumber] = useState(null);
+  const [pickedNumber, setPickedNumber] = useState('');
   const [gameOver, setGameOver] = useState(false);
+  const [numberOfRounds, setNumberOfRounds] = useState([]);
 
   const [fontLoaded] = useFonts({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
   });
+
+  const handleNumberOfRands = (guessRound) => {
+    setNumberOfRounds((prev) => [guessRound, ...prev]);
+  }
 
   const handleGameOver = () => {
     setGameOver(true);
@@ -25,18 +30,30 @@ export default function App() {
     setPickedNumber(number);
   };
 
+  const handleStartNewGame = () => {
+    console.log('Click')
+    setPickedNumber('');
+    setGameOver(false);
+    setNumberOfRounds(0)
+  }
+
   if (!fontLoaded) return <AppLoading />;
 
   let screen = <StartGameScreen onPickNumber={handlePickedNumber} />;
 
   if (pickedNumber) {
     screen = (
-      <GameScreen enteredNumber={pickedNumber} onGameOver={handleGameOver} />
+      <GameScreen
+        enteredNumber={pickedNumber}
+        onGameOver={handleGameOver}
+        handleNumberOfRands={handleNumberOfRands}
+        numberOfRounds={numberOfRounds}
+      />
     );
   }
 
   if (gameOver) {
-    screen = <GameOver />;
+    screen = <GameOver enteredNumber={pickedNumber} rounds={numberOfRounds.length} onStartNewGame={handleStartNewGame} />;
   }
   return (
     <LinearGradient

@@ -1,15 +1,22 @@
-import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
+import { View, Text, StyleSheet, Alert, FlatList } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Title } from '../components/ui/Title';
 import { generateRandomBetween } from '../utils/random';
 import { NumberContainer } from '../components/game/NumberContainer';
 import { PrimaryButton } from '../components/ui/PrimaryButton';
 import { GameDirection } from '../utils/gameText';
-import {Color} from '../utils/colors'
-import {Card} from '../components/ui/Card'
+import { Color } from '../utils/colors';
+import { Card } from '../components/ui/Card';
+import {GuessItemList} from '../components/ui/GuessItemList';
 
-export const GameScreen = ({ enteredNumber, onGameOver }) => {
+
+export const GameScreen = ({
+  enteredNumber,
+  onGameOver,
+  handleNumberOfRands,
+  numberOfRounds,
+}) => {
   let boundary = {
     higher: 100,
     lower: 1,
@@ -23,12 +30,16 @@ export const GameScreen = ({ enteredNumber, onGameOver }) => {
 
   const [currentGuess, setCurrentGuess] = useState(currentGuessValue);
 
-
   useEffect(() => {
-    if(currentGuess === enteredNumber) {
+    if (currentGuess === enteredNumber) {
       onGameOver();
     }
-  }, [currentGuess, enteredNumber])
+  }, [currentGuess, enteredNumber]);
+
+  useEffect(() => {
+    boundary.higher = 100;
+    boundary.lower = 1;
+  }, []);
 
   const handleNextGameGuess = (direction) => {
     // direction => lower or higher string
@@ -56,9 +67,13 @@ export const GameScreen = ({ enteredNumber, onGameOver }) => {
     } else {
       boundary.lower = currentGuess + 1;
     }
-    setCurrentGuess(
-      generateRandomBetween(boundary.lower, boundary.higher, currentGuess)
+    const guessRound = generateRandomBetween(
+      boundary.lower,
+      boundary.higher,
+      currentGuess
     );
+    handleNumberOfRands(guessRound);
+    setCurrentGuess(guessRound);
   };
 
   return (
@@ -83,7 +98,20 @@ export const GameScreen = ({ enteredNumber, onGameOver }) => {
           </PrimaryButton>
         </View>
       </Card>
-      {/* <View>LOG ROUNDS</View> */}
+      <View style={styles.listContainer}>
+        <FlatList
+          data={numberOfRounds}
+          renderItem={({ item, index }) => (
+            <GuessItemList
+              roundNumber={numberOfRounds.length - index}
+              guess={currentGuess}
+            />
+          )}
+          keyExtractor={(item) => item}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
     </View>
   );
 };
@@ -129,4 +157,8 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOpacity: 0.25,
   },
+  listContainer: {
+    flex: 1,
+    padding: 16,
+  }
 });
