@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet, Image, Dimensions} from 'react-native';
 import { PrimaryButton } from '../components/ui/PrimaryButton';
 import {Title} from '../components/ui/Title';
 import {Color} from '../utils/colors'
@@ -25,13 +25,14 @@ export const GameOver = ({rounds, enteredNumber, onStartNewGame}) => {
   );
 }
 
+const deviceWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     padding: 24,
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   title: {
     fontSize: 24,
@@ -42,12 +43,12 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     padding: 12,
     fontFamily: 'open-sans-bold',
-    marginBottom: 24
+    marginBottom: 24,
   },
   imageContainer: {
-    width: 300,
-    height: 300,
-    borderRadius: 150,
+    width: deviceWidth < 360 ? 150 : 300,
+    height: deviceWidth < 360 ? 150 : 300,
+    borderRadius: deviceWidth < 360 ? 75 : 150,
     borderWidth: 3,
     borderColor: Color.primary800,
     margin: 5,
@@ -61,10 +62,10 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans',
     fontSize: 24,
     textAlign: 'center',
-    marginBottom: 24
+    marginBottom: 24,
   },
   highlightText: {
     color: Color.primary500,
-    fontFamily: 'open-sans-bold'
-  } 
+    fontFamily: 'open-sans-bold',
+  },
 });

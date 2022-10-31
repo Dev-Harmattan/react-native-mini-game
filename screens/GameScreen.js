@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { View, Text, StyleSheet, Alert, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Alert, FlatList, Dimensions } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Title } from '../components/ui/Title';
 import { generateRandomBetween } from '../utils/random';
@@ -8,8 +8,7 @@ import { PrimaryButton } from '../components/ui/PrimaryButton';
 import { GameDirection } from '../utils/gameText';
 import { Color } from '../utils/colors';
 import { Card } from '../components/ui/Card';
-import {GuessItemList} from '../components/ui/GuessItemList';
-
+import { GuessItemList } from '../components/game/GuessItemList';
 
 export const GameScreen = ({
   enteredNumber,
@@ -116,10 +115,14 @@ export const GameScreen = ({
   );
 };
 
+
+const deviceWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 24,
+    alignItems: 'center',
   },
   title: {
     fontSize: 24,
@@ -129,13 +132,17 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     padding: 12,
     fontFamily: 'open-sans-bold',
+    maxWidth: '80%',
+    width: 300
   },
   instructionTitle: {
-    fontSize: 24,
+    fontSize: deviceWidth < 360 ? 12 : 24,
     color: Color.yellow500,
     alignSelf: 'center',
     marginBottom: 6,
     fontFamily: 'open-sans-bold',
+    maxWidth: '100%',
+    alignSelf: 'center'
   },
   gameButtonContainer: {
     flexDirection: 'row',
@@ -145,7 +152,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
-    marginTop: 30,
+    marginTop: deviceWidth < 380 ? 12 : 36,
     padding: 16,
     marginHorizontal: 24,
     backgroundColor: Color.primary700,
@@ -160,5 +167,5 @@ const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
     padding: 16,
-  }
+  },
 });
